@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Chatbot</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+    <style>
+        .chat-box {
+            width: 400px;
+            margin: 50px auto;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            color: white;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 10px;
+            border: none;
+        }
+
+        button {
+            background: #00c6ff;
+            color: white;
+            cursor: pointer;
+        }
+
+        .reply {
+            margin-top: 15px;
+            background: rgba(0,0,0,0.3);
+            padding: 10px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body style="background:url('/static/bg.jpg'); background-size:cover;">
+
+<div class="chat-box">
+
+    <h2>🤖 Smart Village AI</h2>
+
+    <form method="POST">
+        <input type="text" name="message" placeholder="Ask something..." required>
+        <button type="submit">Send</button>
+    </form>
+
+    {% if reply %}
+    <div class="reply">
+        {{ reply }}
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>

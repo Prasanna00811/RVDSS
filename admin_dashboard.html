@@ -1,0 +1,21 @@
+<h2>Admin Dashboard</h2>
+<p>Total Users: {{users}}</p>
+<p>Total Complaints: {{complaints}}</p>
+<p>Total Alerts: {{alerts}}</p>
+<a href="/admin_logout">Logout</a>
+<h2>🏆 Rewards Leaderboard</h2>
+
+<table border="1">
+<tr>
+<th>User</th>
+<th>Points</th>
+</tr>
+
+{% for l in leaderboard %}
+<tr>
+<td>{{ l[0] }}</td>
+<td>{{ l[1] }}</td>
+</tr>
+{% endfor %}
+
+</table>

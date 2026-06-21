@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Complaints</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<!-- 🔷 SIDEBAR -->
+<div class="sidebar">
+    <h2>🌐 RVDSS</h2>
+    <a href="/dashboard">🏠 Home</a>
+    <a href="/agriculture">🌱 Agriculture</a>
+    <a href="/health">🏥 Health</a>
+    <a href="/education">📚 Education</a>
+    <a href="/water">💧 Water</a>
+    <a href="/complaint_page">📢 Complaint</a>
+    <a href="/alerts">🚨 Alerts</a>
+    <a href="/library">📖 Library</a>
+    <a href="/profile">👤 Profile</a>
+    <a href="/rewards">🏆 Rewards</a>
+    <a href="/logout">🚪 Logout</a>
+</div>
+
+<!-- 🔶 MAIN CONTENT -->
+<div class="main">
+
+    <div class="topbar">
+        <h2>📢 Complaint System</h2>
+    </div>
+
+    <!-- ✅ ADD COMPLAINT FORM -->
+    <div style="background:white;padding:20px;margin-top:20px;border-radius:10px;">
+        <h3>Submit Complaint</h3>
+
+        <form action="/complaint" method="POST" enctype="multipart/form-data">
+
+            <label>Complaint Message</label><br>
+            <textarea name="message" required style="width:100%;height:80px;"></textarea>
+
+            <br><br>
+
+            <label>Upload File (optional)</label><br>
+            <input type="file" name="file">
+
+            <br><br>
+
+            <button type="submit">Submit Complaint</button>
+
+        </form>
+    </div>
+
+    <!-- 📊 COMPLAINT TABLE -->
+    <table border="1" cellpadding="10" cellspacing="0" width="100%" style="margin-top:20px;background:white;border-collapse:collapse;">
+
+        <tr style="background:#4facfe;color:white;">
+            <th>ID</th>
+            <th>User</th>
+            <th>Message</th>
+            <th>File</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+
+        {% for c in complaints %}
+
+        <tr>
+            <td>{{ c[0] }}</td>
+            <td>{{ c[1] }}</td>
+            <td>{{ c[2] }}</td>
+
+            <td>
+                {% if c[3] %}
+                    <a href="/uploads/{{ c[3] }}" target="_blank">View</a>
+                {% else %}
+                    No File
+                {% endif %}
+            </td>
+
+            <td>
+                {% if c[4] == "Pending" %}
+                    <span style="color:orange;">⏳ Pending</span>
+                {% else %}
+                    <span style="color:green;">✅ Resolved</span>
+                {% endif %}
+            </td>
+
+            <td>
+                {% if c[4] == "Pending" %}
+                    <a href="/update_status/{{ c[0] }}/Resolved">Resolve</a>
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- 🌍 Language Selector -->
+    <form method="get">
+        <select name="lang" onchange="this.form.submit()">
+            <option value="en">English</option>
+            <option value="te">తెలుగు</option>
+            <option value="hi">हिंदी</option>
+        </select>
+    </form>
+
+    <h2>{{text.register}}</h2>
+
+    <form action="/register" method="post">
+        <input type="text" name="name" placeholder="{{text.name}}" required><br>
+        <input type="email" name="email" placeholder="{{text.email}}" required><br>
+        <input type="password" name="password" placeholder="{{text.password}}" required><br>
+
+        <button type="submit">{{text.register}}</button>
+    </form>
+
+    <br>
+    <a href="/?lang={{lang}}">Already have account? Login</a>
+
+</div>
+
+</body>
+</html>

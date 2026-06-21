@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+
+    <!-- 📱 MOBILE -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ✅ CSS -->
+    <link rel="stylesheet" href="/static/style.css?v=3">
+
+    <!-- 🔤 FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- 📊 CHART -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<!-- 🔷 SIDEBAR -->
+<div class="sidebar">
+    <h2>🌐 RVDSS</h2>
+
+    <a href="/dashboard">🏠 Home</a>
+    <a href="/agriculture">🌱 Agriculture</a>
+    <a href="/health">🏥 Health</a>
+    <a href="/education">📚 Education</a>
+    <a href="/water">💧 Water</a>
+    <a href="/complaint_page">📢 Complaint</a>
+    <a href="/alerts">🚨 Alerts</a>
+    <a href="/library">📖 Library</a>
+    <a href="/profile">👤 Profile</a>
+    <a href="/notifications">🔔 Notifications</a>
+    <a href="/rewards">🏆 Rewards</a>
+    <a href="/logout">🚪 Logout</a>
+</div>
+
+<!-- 🔶 MAIN -->
+<div class="main">
+
+    <!-- 🔷 TOPBAR -->
+    <div class="topbar">
+        <h2>🚀 Welcome, {{user}}</h2>
+        <button onclick="toggleMode()">🌙</button>
+    </div>
+
+    <!-- 📊 CARDS -->
+    <div class="cards">
+
+        <a href="/complaint_page">
+            <div class="card">📢 Complaints<br><b>{{complaints}}</b></div>
+        </a>
+
+        <a href="/alerts">
+            <div class="card">🚨 Alerts<br><b>{{alerts}}</b></div>
+        </a>
+
+        <a href="/library">
+            <div class="card">📚 Books<br><b>{{books}}</b></div>
+        </a>
+
+        <a href="/notifications">
+            <div class="card">🔔 Notifications</div>
+        </a>
+
+        <a href="/chatbot">
+            <div class="card">🤖 AI Chatbot</div>
+        </a>
+
+        <a href="/map">
+            <div class="card">📍 Village Map</div>
+        </a>
+
+        <a href="/profile">
+            <div class="card">👤 My Profile</div>
+        </a>
+
+        <a href="/rewards">
+            <div class="card">🏆 My Rewards</div>
+        </a>
+
+    </div>
+
+    <!-- 📅 FILTER BUTTONS -->
+    <div style="margin-top:20px;">
+        <button onclick="loadWeekly()">📅 Weekly</button>
+        <button onclick="loadMonthly()">📆 Monthly</button>
+    </div>
+
+    <!-- 📊 CHART -->
+    <div class="chart-container">
+        <h3>📊 Complaint Status</h3>
+        <canvas id="chart" height="100"></canvas>
+    </div>
+
+    <!-- 🎯 PROGRESS BARS -->
+    <div style="margin-top:30px;">
+        <h3>📊 Complaint Progress</h3>
+
+        <div>
+            <p>Pending</p>
+            <div class="progress">
+                <div class="progress-fill pending" style="width: 70%"></div>
+            </div>
+        </div>
+
+        <div>
+            <p>Resolved</p>
+            <div class="progress">
+                <div class="progress-fill resolved" style="width: 30%"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- 📊 SCRIPT -->
+<script>
+
+let chart;
+
+// 🔹 Load default (database data)
+let data = {{ status_data | tojson | safe }};
+let labels = data.map(x => x[0]);
+let values = data.map(x => x[1]);
+
+loadChart(labels, values);
+
+// 🔹 Chart function
+function loadChart(labels, values){
+    if(chart) chart.destroy();
+
+    chart = new Chart(document.getElementById("chart"), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Complaints",
+                data: values,
+                backgroundColor: ["#ff6b6b", "#4caf50"],
+                borderRadius: 10
+            }]
+        },
+        options: {
+            animation: {
+                duration: 2000,
+                easing: 'easeOutBounce'
+            },
+            plugins: {
+                legend: {
+                    labels: { color: "white" }
+                }
+            },
+            scales: {
+                x: { ticks: { color: "white" } },
+                y: { ticks: { color: "white" } }
+            }
+        }
+    });
+}
+
+// 📅 Weekly
+function loadWeekly(){
+    loadChart(
+        ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],
+        [5,3,6,2,4,7,3]
+    );
+}
+
+// 📆 Monthly
+function loadMonthly(){
+    loadChart(
+        ["Jan","Feb","Mar","Apr","May"],
+        [20,15,30,10,25]
+    );
+}
+
+// 🌙 DARK MODE
+function toggleMode(){
+    document.body.classList.toggle("dark");
+}
+
+</script>
+
+</body>
+</html>

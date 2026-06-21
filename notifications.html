@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Notifications</title>
+</head>
+<body>
+
+<h2>🔔 Notifications</h2>
+
+{% if notifications %}
+    <ul>
+    {% for n in notifications %}
+        <li>{{ n[1] }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No notifications available</p>
+{% endif %}
+
+<a href="/dashboard">⬅ Back to Dashboard</a>
+
+</body>
+</html>

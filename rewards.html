@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Rewards</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="main">
+
+<h2>🏆 Your Reward Points</h2>
+
+<h1>{{ points }} Points</h1>
+
+<h2>🏅 Leaderboard</h2>
+
+<table border="1" width="60%">
+<tr>
+<th>User</th>
+<th>Points</th>
+</tr>
+
+{% for l in leaderboard %}
+<tr>
+<td>{{ l[0] }}</td>
+<td>{{ l[1] }}</td>
+</tr>
+{% endfor %}
+
+</table>
+
+<br>
+<a href="/dashboard">⬅ Back</a>
+
+</div>
+
+</body>
+</html>
